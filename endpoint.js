@@ -12,7 +12,8 @@ class Endpoint {
     JADWAL = "http://mhsmobile.amikom.ac.id/api/personal/jadwal_kuliah"
     PERSONAL = "http://mhsmobile.amikom.ac.id/api/personal/init_data_mhs"
     LIST_PRESENSI = "http://mhsmobile.amikom.ac.id/api/presensi/list_mk"
-    PRESENSI = "http://202.91.9.14:6000/api/presensi_mobile/validate_qr_code"
+    PRESENSI_QRCODE = "http://202.91.9.14:6000/api/presensi_mobile/validate_qr_code"
+    PRESENSI_CODE = "http://202.91.9.14:6000/api/presensi_mobile/validate_ticket"
     KHS = "http://mhsmobile.amikom.ac.id/api/krs/init_khs"
     TRANSKRIP = "http://mhsmobile.amikom.ac.id/api/krs/transkrip"
 }

@@ -1,8 +1,7 @@
 const axios = require('axios')
 const Endpoint = require('./endpoint')
 
-
-module.export = class AmikomOne {
+class AmikomOne {
     constructor() {
         this.access_token = ""
         this.npm = ""
@@ -43,22 +42,41 @@ module.export = class AmikomOne {
             this.npm = npm
             this.access_token = response.data.access_token
             this.Authorization = this.access_token
+            console.log(this.access_token)
             return response.data
         } catch (error) {
             console.log(error)
         }
     }
 
-    async presensi(data) {
+    async presensi_via_qrcode(data) {
         try {
             let params = await this.makeParam({
                 data
             })
-            const response = await this.request.post(Endpoint.PRESENSI, params, {
+            const response = await this.request.post(Endpoint.PRESENSI_QRCODE, params, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
+            // response sukses: {"message": "Created"}
+            return response.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    async presensi_via_code(data) {
+        try {
+            let params = await this.makeParam({
+                data
+            })
+            const response = await this.request.post(Endpoint.PRESENSI_CODE, params, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            // response sukses: {"message": "Created"}
             return response.data
         } catch (error) {
             console.log(error)
@@ -124,3 +142,5 @@ module.export = class AmikomOne {
         }
     }
 }
+
+module.exports = AmikomOne
