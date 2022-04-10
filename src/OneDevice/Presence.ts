@@ -1,13 +1,17 @@
-import got from "got/dist/source";
-import {PresenceMessage, PresenceStatus} from "../typings/Enum/Presence";
-import moment from "moment"
-import Tokenizer from "../Foundation/Tokenizer";
-import {IPresence, IPresenceDetail, ResponsePresence} from "../typings/Response";
-import {ContentType} from "../typings/Headers";
-import Encryption from "../Foundation/Encryption";
+import got from 'got/dist/source'
+import { PresenceMessage, PresenceStatus } from '../typings/Enum/Presence'
+import moment from 'moment'
+import Tokenizer from '../Foundation/Tokenizer'
+import {
+  IPresence,
+  IPresenceDetail,
+  ResponsePresence
+} from '../typings/Response'
+import { ContentType } from '../typings/Headers'
+import Encryption from '../Foundation/Encryption'
 
 const makeRawSignature = function (nim: string, kode: string) {
-  moment.locale("id")
+  moment.locale('id')
   let format = `${nim.charAt(0)}${nim.charAt(4)}${nim.charAt(6)}${nim.charAt(
     8
   )}`
@@ -33,95 +37,130 @@ const makeRawSignature = function (nim: string, kode: string) {
   return `${kode};${nim};${str}-${i2}`
 }
 
-
 export default {
   /**
-  * Presensi qrcode
-  * Untuk gambar silakan diolah sendiri untuk mendapatkn result qrcodenya
-  */
-  Qrcode: async (bearerToken: string, data: string): Promise<ResponsePresence> => {
+   * Presensi qrcode
+   * Untuk gambar silakan diolah sendiri untuk mendapatkn result qrcodenya
+   */
+  Qrcode: async (
+    bearerToken: string,
+    data: string
+  ): Promise<ResponsePresence> => {
     try {
-      await got.post("https://ds.amikom.ac.id/api/amikomone/presensi_mobile/validate_qr_code", {
-        headers: {
-          "Authorization": `Bearer ${bearerToken}`,
-          "content-type": ContentType.Json
-        },
-        json: {
-          data
-        }
-      }).json()
+      await got
+        .post(
+          'https://ds.amikom.ac.id/api/amikomone/presensi_mobile/validate_qr_code',
+          {
+            headers: {
+              Authorization: `Bearer ${bearerToken}`,
+              'content-type': ContentType.Json
+            },
+            json: {
+              data: `${data};${Tokenizer(bearerToken).npm}`
+            }
+          }
+        )
+        .json()
       return {
         status: PresenceStatus.Success,
         message: PresenceMessage.Success
       }
     } catch (e: any) {
       const statusCode = Number((e as any).response!.statusCode)
-      if (!statusCode.toString().startsWith("4")) throw new Error(e)
-      return statusCode == 422 ? {
-        status: PresenceStatus.ResourceAlreadyExists,
-        message: PresenceMessage.ResourceAlreadyExists
-      } : {
-        status: PresenceStatus.Failed,
-        message: PresenceMessage.Failed
-      }
+      if (!statusCode.toString().startsWith('4')) throw new Error(e)
+      return statusCode == 422
+        ? {
+            status: PresenceStatus.ResourceAlreadyExists,
+            message: PresenceMessage.ResourceAlreadyExists
+          }
+        : {
+            status: PresenceStatus.Failed,
+            message: PresenceMessage.Failed
+          }
     }
   },
   /**
-  * Presensi kode 5 digit 
-  */
-  Code: async (bearerToken: string, code: string): Promise<ResponsePresence> => {
+   * Presensi kode 5 digit
+   */
+  Code: async (
+    bearerToken: string,
+    code: string
+  ): Promise<ResponsePresence> => {
     try {
-      await got.post("https://ds.amikom.ac.id/api/amikomone/presensi_mobile/validate_ticket", {
-        headers: {
-          "Authorization": `Bearer ${bearerToken}`,
-          "content-type": ContentType.Json
-        },
-        json: {
-          data: Encryption.encrypt(makeRawSignature(Tokenizer(bearerToken).npm || '', code))
-        }
-      }).json()
+      await got
+        .post(
+          'https://ds.amikom.ac.id/api/amikomone/presensi_mobile/validate_ticket',
+          {
+            headers: {
+              Authorization: `Bearer ${bearerToken}`,
+              'content-type': ContentType.Json
+            },
+            json: {
+              data: Encryption.encrypt(
+                makeRawSignature(Tokenizer(bearerToken).npm || '', code)
+              )
+            }
+          }
+        )
+        .json()
       return {
         status: PresenceStatus.Success,
         message: PresenceMessage.Success
       }
     } catch (e: any) {
       const statusCode = Number((e as any).response!.statusCode)
-      if (!statusCode.toString().startsWith("4")) throw new Error(e)
-      return statusCode == 422 ? {
-        status: PresenceStatus.ResourceAlreadyExists,
-        message: PresenceMessage.ResourceAlreadyExists
-      } : {
-        status: PresenceStatus.Failed,
-        message: PresenceMessage.Failed
-      }
-
+      if (!statusCode.toString().startsWith('4')) throw new Error(e)
+      return statusCode == 422
+        ? {
+            status: PresenceStatus.ResourceAlreadyExists,
+            message: PresenceMessage.ResourceAlreadyExists
+          }
+        : {
+            status: PresenceStatus.Failed,
+            message: PresenceMessage.Failed
+          }
     }
   },
   /**
    * Rekap Presensi
    */
-  All: (bearerToken: string, xApiKey: string, semester: number, tahunAkademik: string): Promise<IPresence[]> => got.post("https://ds.amikom.ac.id/api/amikomone/academic/presensi/rekap", {
-    headers: {
-      Authorization: `Bearer ${bearerToken}`,
-      'X-Api-Key': xApiKey,
-      "content-type": ContentType.FormEncoded
-    },
-    form: {
-      semester, tahun_akademik: tahunAkademik
-    }
-  }).json(),
+  All: (
+    bearerToken: string,
+    xApiKey: string,
+    semester: number,
+    tahunAkademik: string
+  ): Promise<IPresence[]> =>
+    got
+      .post('https://ds.amikom.ac.id/api/amikomone/academic/presensi/rekap', {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+          'X-Api-Key': xApiKey,
+          'content-type': ContentType.FormEncoded
+        },
+        form: {
+          semester,
+          tahun_akademik: tahunAkademik
+        }
+      })
+      .json(),
   /**
    * Detail Presensi (keterangan waktu presensi berdasarkan krs/matkul)
    */
-  Detail: (bearerToken: string, xApiKey: string, krsId: number): Promise<IPresenceDetail[]> => got.post("https://ds.amikom.ac.id/api/amikomone/academic/presensi/kuliah", {
-    headers: {
-      Authorization: `Bearer ${bearerToken}`,
-      'X-Api-Key': xApiKey,
-      "content-type": ContentType.FormEncoded
-    },
-    form: {
-      krs_id: krsId
-    }
-  }).json(),
-
+  Detail: (
+    bearerToken: string,
+    xApiKey: string,
+    krsId: number
+  ): Promise<IPresenceDetail[]> =>
+    got
+      .post('https://ds.amikom.ac.id/api/amikomone/academic/presensi/kuliah', {
+        headers: {
+          Authorization: `Bearer ${bearerToken}`,
+          'X-Api-Key': xApiKey,
+          'content-type': ContentType.FormEncoded
+        },
+        form: {
+          krs_id: krsId
+        }
+      })
+      .json()
 }
