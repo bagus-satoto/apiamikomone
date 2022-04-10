@@ -1,13 +1,13 @@
-import { IPresence, IPresenceDetail, ResponsePresence } from "../typings/Response";
+import { IPresence, IPresenceDetail, ResponsePresence } from '../typings/Response';
 declare const _default: {
     /**
-    * Presensi qrcode
-    * Untuk gambar silakan diolah sendiri untuk mendapatkn result qrcodenya
-    */
+     * Presensi qrcode
+     * Untuk gambar silakan diolah sendiri untuk mendapatkn result qrcodenya
+     */
     Qrcode: (bearerToken: string, data: string) => Promise<ResponsePresence>;
     /**
-    * Presensi kode 5 digit
-    */
+     * Presensi kode 5 digit
+     */
     Code: (bearerToken: string, code: string) => Promise<ResponsePresence>;
     /**
      * Rekap Presensi
