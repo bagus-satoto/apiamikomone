@@ -1,4 +1,4 @@
-import OneDevice from "../src/OneDevice"
+import OneDevice from "../src"
 import dotenv from 'dotenv'
 
 dotenv.config()

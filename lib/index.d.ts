@@ -1,2 +1,3 @@
-export * as OneDevice from "./OneDevice";
+import OneDevice from "./OneDevice";
+export default OneDevice;
 //# sourceMappingURL=index.d.ts.map

@@ -1,1 +1,2 @@
-export * as OneDevice from "./OneDevice"
+import OneDevice from "./OneDevice"
+export default OneDevice
