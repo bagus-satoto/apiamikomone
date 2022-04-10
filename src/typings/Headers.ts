@@ -3,4 +3,4 @@ export enum ContentType {
   Json = 'application/json'
 }
 
-
+export const UserAgent = '@m!k0mXv=#neMob!le'

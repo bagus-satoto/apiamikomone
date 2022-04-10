@@ -1,4 +1,4 @@
-import {PresenceMessage, PresenceStatus} from "./Enum"
+import { PresenceMessage, PresenceStatus } from './Enum'
 
 export interface ResponseResult {
   result: 0 | 1
@@ -8,17 +8,24 @@ export interface ResponseAuth {
   api_key: string
   expires_in: number
 }
-
-export type ResponsePresence = {
-  status: PresenceStatus.Success,
-  message: PresenceMessage.Success
-} | {
-  status: PresenceStatus.ResourceAlreadyExists,
-  message: PresenceMessage.ResourceAlreadyExists
-} | {
-  status: PresenceStatus.Failed,
-  message: PresenceMessage.Failed
+export interface ResponseAuthLegacy {
+  access_token: string
+  expires_in: number
 }
+
+export type ResponsePresence =
+  | {
+      status: PresenceStatus.Success
+      message: PresenceMessage.Success
+    }
+  | {
+      status: PresenceStatus.ResourceAlreadyExists
+      message: PresenceMessage.ResourceAlreadyExists
+    }
+  | {
+      status: PresenceStatus.Failed
+      message: PresenceMessage.Failed
+    }
 export interface IBio {
   Mhs: {
     Npm: string
@@ -37,7 +44,7 @@ export interface IBio {
     SemesterFormat: string
   }
 }
-export type IJenisKuliah = "Teori" | "Praktikum"
+export type IJenisKuliah = 'Teori' | 'Praktikum'
 
 export interface IJadwalKuliah {
   IdHari: number
@@ -53,7 +60,7 @@ export interface IJadwalKuliah {
   MataKuliah: string
   JenisKuliah: IJenisKuliah
   Kelas: string
-  Nik: string,
+  Nik: string
   NamaDosen: string
   EmailDosen: string
   Jenjang: string
@@ -66,7 +73,7 @@ export interface ITicketCost {
   jenis_kwj: string
   nama_kwj: string
   nominal: number
-  tipe: "open" | string
+  tipe: 'open' | string
   alias_nominal: string
   is_active: boolean
   status: string
@@ -83,7 +90,7 @@ export interface IHistory {
 export type ResponsePage<T> = {
   status: {
     code: number
-    description: "OK" | string
+    description: 'OK' | string
     pages_count: number
   }
   results: T
