@@ -17,6 +17,12 @@ Legacy.Auth(npm, password).then(async (resp) => {
     bio.PeriodeAkademik.TahunAkademik
   )
   console.log(jadwal, 'jadwal')
+  const matkul = await Legacy.Mahasiswa.MataKuliah(
+    resp.access_token,
+    bio.PeriodeAkademik.Semester,
+    bio.PeriodeAkademik.TahunAkademik
+  )
+  console.log(matkul, 'matkul')
 
   console.log(await Legacy.Presence.QrCode(npm, qrcodeResult))
   console.log(

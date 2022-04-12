@@ -1,1 +1,1 @@
-{"version":3,"file":"Mahasiswa.d.ts","sourceRoot":"","sources":["../../src/Legacy/Mahasiswa.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,IAAI,EAAE,aAAa,EAAE,MAAM,qBAAqB,CAAA;;gCAIxC,MAAM,YACT,MAAM,iBACD,MAAM,KACpB,QAAQ,aAAa,EAAE,CAAC;uBAcF,MAAM,KAAG,QAAQ,IAAI,CAAC;;AAnBjD,wBAiCC"}
+{"version":3,"file":"Mahasiswa.d.ts","sourceRoot":"","sources":["../../src/Legacy/Mahasiswa.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,IAAI,EAAE,aAAa,EAAE,WAAW,EAAE,MAAM,qBAAqB,CAAA;;;;;;AA6EtE,wBAIC"}

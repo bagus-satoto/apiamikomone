@@ -6,7 +6,8 @@ declare const _default: {
         Reset: (npm: string, deviceId: string) => Promise<import("../typings/Response").ResponseResult>;
     };
     Mahasiswa: {
-        JadwalKuliah: (bearerToken: string, xApiKey: string) => Promise<import("../typings/Response").IJadwalKuliah[]>;
+        JadwalKuliah: (bearerToken: string, xApiKey: string, idHari?: number | undefined) => Promise<import("../typings/Response").IJadwalKuliah[]>;
+        MataKuliah: (bearerToken: string, xApiKey: string) => Promise<import("../typings/Response").IMataKuliah[]>;
         Bio: (bearerToken: string, xApiKey: string) => Promise<import("../typings/Response").IBio>;
         KtmDigital: (bearerToken: string, xApiKey: string) => import("got/dist/source").CancelableRequest<unknown>;
     };
