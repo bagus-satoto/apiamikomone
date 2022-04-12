@@ -21,4 +21,5 @@ yarn add "github:binsarjr/apiamikomone#v1.0.0"
 # Contoh
 
 Lihat [di sini](./Examples/OneDevice.ts) untuk one devcie
+
 Lihat [di sini](./Examples/Legacy.ts) untuk legacy version
