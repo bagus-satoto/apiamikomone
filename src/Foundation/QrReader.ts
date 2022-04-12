@@ -2,9 +2,7 @@ import Cheerio from 'cheerio'
 import fileType from 'file-type'
 import got from 'got/dist/source'
 import Jimp from 'jimp'
-import moment from 'moment'
 
-moment.locale('id')
 const QrCode = require('qrcode-reader')
 
 const scanWithJimpQrcode = (data: Buffer): Promise<string | null> =>

@@ -45,25 +45,27 @@ export interface IBio {
   }
 }
 export type IJenisKuliah = 'Teori' | 'Praktikum'
-
-export interface IJadwalKuliah {
-  IdHari: number
-  IdJam: number
-  IdKuliah: number
-  Keterangan: string
-  Hari: string
-  Ruang: string
-  Waktu: string
+export interface IMataKuliah {
   ZoomURL: string
-  IsZoomURL: 1 | 0
+  IsZoomURL: boolean
   Kode: string
+  IdKuliah: number
   MataKuliah: string
   JenisKuliah: IJenisKuliah
-  Kelas: string
   Nik: string
   NamaDosen: string
   EmailDosen: string
   Jenjang: string
+  Kelas: string
+}
+
+export interface IJadwalKuliah extends IMataKuliah {
+  IdHari: number
+  IdJam: number
+  Keterangan: string
+  Hari: string
+  Ruang: string
+  Waktu: string
   IsBolehPresensi: 0 | 1
   KodePresensi: string
 }
