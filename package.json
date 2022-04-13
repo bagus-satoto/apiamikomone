@@ -6,9 +6,7 @@
   "dependencies": {
     "@andreekeberg/imagedata": "^1.0.2",
     "cheerio": "^1.0.0-rc.10",
-    "file-type": "16.5.1",
     "form-data": "^4.0.0",
-    "formdata-node": "^4.3.2",
     "got": "11.8.2",
     "jimp": "^0.16.1",
     "jsqr": "^1.4.0",
