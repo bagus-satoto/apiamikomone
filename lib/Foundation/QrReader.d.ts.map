@@ -1,1 +1,1 @@
-{"version":3,"file":"QrReader.d.ts","sourceRoot":"","sources":["../../src/Foundation/QrReader.ts"],"names":[],"mappings":";AA4BA,eAAO,MAAM,WAAW,SAAgB,MAAM,KAAG,QAAQ,MAAM,CAsD9D,CAAA;AAgCD,yBAA+B,IAAI,EAAE,MAAM,GAAG,OAAO,CAAC,MAAM,CAAC,CAS5D"}
+{"version":3,"file":"QrReader.d.ts","sourceRoot":"","sources":["../../src/Foundation/QrReader.ts"],"names":[],"mappings":";AA6DA,yBAA+B,IAAI,EAAE,MAAM,GAAG,OAAO,CAAC,MAAM,CAAC,CAW5D"}
