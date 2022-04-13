@@ -2,8 +2,10 @@ import Cheerio from 'cheerio'
 import fileType from 'file-type'
 import got from 'got/dist/source'
 import Jimp from 'jimp'
-
+import FormData from 'form-data'
 const QrCode = require('qrcode-reader')
+const { getSync } = require('@andreekeberg/imagedata')
+const jsQR = require('jsqr')
 
 const scanWithJimpQrcode = (data: Buffer): Promise<string | null> =>
   new Promise((resolve) => {
@@ -80,9 +82,41 @@ export const scanWithApi = async (data: Buffer): Promise<string> => {
   return $('textarea').val()
 }
 
+const scanWithJsQr = (data: Buffer) => {
+  const imageData = getSync(data)
+  const code = jsQR(imageData.data, imageData.width, imageData.height)
+  if (!code) {
+    return null
+  }
+  return code.data
+}
+const scanWithImgonline = async (data: Buffer) => {
+  const form = new FormData()
+
+  form.append('uploadfile', data, 'qrcode')
+  form.append('codetype', 2)
+  form.append('rotset', 0)
+  form.append('croptype', 1)
+  form.append('cropleft', 0)
+  form.append('cropright', 0)
+  form.append('croptop', 0)
+  form.append('cropbottom', 0)
+
+  const response = await got
+    .post('https://www.imgonline.com.ua/eng/scan-qr-bar-code-result.php', {
+      headers: form.getHeaders(),
+      body: form
+    })
+    .text()
+  const $ = Cheerio.load(response)
+  return $('#content div').text().trim()
+}
+
 export default async function (data: Buffer): Promise<string> {
   let result: string | null = null
-  result = await scanWithJimpQrcode(data)
+  result = scanWithJsQr(data)
+  if (!result) result = await scanWithImgonline(data)
+  if (!result) result = await scanWithJimpQrcode(data)
   if (!result) result = await scanWithApi(data)
   if (!result) throw new Error('QR Code tidak dikenali')
 
