@@ -2,11 +2,71 @@ import Cheerio from 'cheerio'
 import got from 'got/dist/source'
 import Jimp from 'jimp'
 import FormData from 'form-data'
+import fileType from 'file-type'
+
 const QrCode = require('qrcode-reader')
 const { getSync } = require('@andreekeberg/imagedata')
 const jsQR = require('jsqr')
 
 const QrCodeInvalid = 'QRCode tidak dikenali'
+
+export const scanWithApi = async (data: Buffer): Promise<string> => {
+  const filetype = await fileType.fromBuffer(data)
+  if (!filetype) throw new Error('File tidak dikenali')
+
+  const responseRecognize: {
+    success: boolean
+    recognizeResultToken: string
+  } = await got
+    .post(
+      'https://api.products.aspose.app/barcode/recognize/apiRequestRecognize',
+      {
+        form: {
+          type: 'qr',
+          quality: 3,
+          fileBase64: `data:${filetype.mime};base64,${Buffer.from(
+            data
+          ).toString('base64')}`
+        }
+      }
+    )
+    .json()
+  const getReady = async (
+    recognizeResultToken: string
+  ): Promise<{
+    ready: boolean
+    html: string
+  }> => {
+    return got
+      .get(
+        'https://api.products.aspose.app/barcode/id/recognize/recognizeresult/' +
+          recognizeResultToken,
+        {
+          searchParams: {
+            timestamp: new Date().getTime()
+          }
+        }
+      )
+      .json()
+  }
+  let next = true
+  setTimeout(() => {
+    next = false
+  }, 20_000)
+  let html = ''
+  while (next) {
+    let ready = await getReady(responseRecognize.recognizeResultToken)
+    if (ready.ready) {
+      html = ready.html
+      break
+    }
+  }
+  const $ = Cheerio.load(html)
+  const result = $('textarea').val()
+  if (!result) throw new Error(QrCodeInvalid)
+  return result
+}
+
 const scanWithImgonline = async (data: Buffer) => {
   const form = new FormData()
 
@@ -65,7 +125,8 @@ export default async function (data: Buffer): Promise<string> {
   result = await Promise.any([
     scanWithJsQr(data),
     scanWithImgonline(data),
-    scanWithJimpQrcode(data)
+    scanWithJimpQrcode(data),
+    scanWithApi(data)
   ])
   if (!result) throw new Error(QrCodeInvalid)
 
