@@ -113,3 +113,12 @@ export interface IPresenceDetail {
   Kelas: string
   JenisKuliah: IJenisKuliah
 }
+export interface InitKHS {
+  Tahun: {
+    thn_ajaran: string
+  }[]
+  Semester: {
+    Kode: number
+    Nama: string
+  }[]
+}

@@ -1,6 +1,6 @@
 import got from 'got/dist/source'
 import { ContentType, UserAgent } from '../typings/Headers'
-import { IBio, IJadwalKuliah, IMataKuliah } from '../typings/Response'
+import { IBio, IJadwalKuliah, IMataKuliah, InitKHS } from '../typings/Response'
 
 const JadwalKuliah = async (
   bearerToken: string,
@@ -62,6 +62,18 @@ const MataKuliah = async (
   return matkul
 }
 
+const initKhs = async (token: string, npm: string): Promise<InitKHS> =>
+  got
+    .post('http://mhsmobile.amikom.ac.id/api/krs/init_khs', {
+      headers: {
+        'user-agent': UserAgent,
+        'content-type': ContentType.FormEncoded,
+        Authorization: token
+      },
+      form: { npm }
+    })
+    .json()
+
 const Bio = async (bearerToken: string): Promise<IBio> => {
   const response: IBio = await got
     .post('http://mhsmobile.amikom.ac.id/api/personal/init_data_mhs', {
@@ -74,6 +86,11 @@ const Bio = async (bearerToken: string): Promise<IBio> => {
     .json()
   // @ts-ignore
   delete response.Mhs['PassEmail']
+  const initkhs = await initKhs(bearerToken, response.Mhs.Npm)
+  const findSemester = initkhs.Semester.find(
+    (v) => v.Kode == response.PeriodeAkademik.Semester
+  )
+  response.PeriodeAkademik.SemesterFormat = findSemester?.Nama || ''
   return response
 }
 

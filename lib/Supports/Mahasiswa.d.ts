@@ -9,4 +9,4 @@ declare const _default: {
     getNims: (body: string) => RegExpMatchArray;
 };
 export default _default;
-//# sourceMappingURL=Supports.d.ts.map
+//# sourceMappingURL=Mahasiswa.d.ts.map

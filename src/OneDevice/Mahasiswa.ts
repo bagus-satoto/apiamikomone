@@ -1,6 +1,6 @@
 import got from 'got/dist/source'
 import Tokenizer from '../Supports/Tokenizer'
-import { IBio, IJadwalKuliah, IMataKuliah } from '../typings/Response'
+import { IBio, IJadwalKuliah, IMataKuliah, InitKHS } from '../typings/Response'
 const JadwalKuliah = async (
   bearerToken: string,
   xApiKey: string,
@@ -49,6 +49,18 @@ const MataKuliah = async (bearerToken: string, xApiKey: string) => {
   }
   return matkul
 }
+const initKhs = async (
+  bearerToken: string,
+  xApiKey: string
+): Promise<InitKHS> =>
+  got
+    .post('https://ds.amikom.ac.id/api/amikomone/academic/krs/prep_khs', {
+      headers: {
+        Authorization: `Bearer ${bearerToken}`,
+        'X-Api-Key': xApiKey
+      }
+    })
+    .json()
 const Bio = async (bearerToken: string, xApiKey: string): Promise<IBio> => {
   const response: IBio = await got
     .post('https://ds.amikom.ac.id/api/amikomone/academic/personal/bio', {
@@ -60,6 +72,12 @@ const Bio = async (bearerToken: string, xApiKey: string): Promise<IBio> => {
     .json()
   // @ts-ignore
   delete response.Mhs['PassEmail']
+  const initkhs = await initKhs(bearerToken, xApiKey)
+  const findSemester = initkhs.Semester.find(
+    (v) => v.Kode == response.PeriodeAkademik.Semester
+  )
+  response.PeriodeAkademik.SemesterFormat = findSemester?.Nama || ''
+
   return response
 }
 const KtmDigital = (bearerToken: string, xApiKey: string) =>
