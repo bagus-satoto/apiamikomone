@@ -2,6 +2,7 @@
   "name": "@binsarjr/apiamikomone",
   "version": "1.0.0",
   "main": "lib/index.js",
+  "types": "./lib/index.d.ts",
   "license": "MIT",
   "dependencies": {
     "@andreekeberg/imagedata": "^1.0.2",
