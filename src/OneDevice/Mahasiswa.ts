@@ -1,5 +1,5 @@
 import got from 'got/dist/source'
-import Tokenizer from '../Foundation/Tokenizer'
+import Tokenizer from '../Supports/Tokenizer'
 import { IBio, IJadwalKuliah, IMataKuliah } from '../typings/Response'
 const JadwalKuliah = async (
   bearerToken: string,

@@ -1,8 +1,9 @@
-import Legacy from './Legacy';
-import OneDevice from './OneDevice';
-import MikomSupports from './Foundation/Supports';
-import MikomValidation from './Foundation/Validations';
-import MikomReader from './Foundation/QrReader';
-export { Legacy, MikomSupports, MikomValidation, MikomReader };
-export default OneDevice;
+import MikomLegacy from './Legacy';
+import MikomOneDevice from './OneDevice';
+import MikomSupports from './Supports/Supports';
+import MikomValidation from './Supports/Validations';
+import MikomReader from './Supports/QrReader';
+import MikomMaster from './Master';
+export { MikomLegacy, MikomSupports, MikomValidation, MikomReader, MikomMaster };
+export default MikomOneDevice;
 //# sourceMappingURL=index.d.ts.map

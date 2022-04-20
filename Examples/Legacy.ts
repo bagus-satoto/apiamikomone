@@ -1,4 +1,4 @@
-import { Legacy } from '../src'
+import { MikomLegacy as Legacy } from '../src'
 import dotenv from 'dotenv'
 dotenv.config()
 

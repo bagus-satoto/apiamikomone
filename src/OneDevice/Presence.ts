@@ -1,14 +1,14 @@
 import got from 'got/dist/source'
 import { PresenceMessage, PresenceStatus } from '../typings/Enum/Presence'
 import moment from 'moment'
-import Tokenizer from '../Foundation/Tokenizer'
+import Tokenizer from '../Supports/Tokenizer'
 import {
   IPresence,
   IPresenceDetail,
   ResponsePresence
 } from '../typings/Response'
 import { ContentType } from '../typings/Headers'
-import Encryption from '../Foundation/Encryption'
+import Encryption from '../Supports/Encryption'
 
 const makeRawSignature = function (nim: string, kode: string) {
   moment.locale('id')
