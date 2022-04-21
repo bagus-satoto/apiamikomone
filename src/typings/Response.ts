@@ -1,4 +1,4 @@
-import { PresenceMessage, PresenceStatus } from './Enum'
+import { PresenceMessage, PresenceStatus } from './Enum/Presence'
 
 export interface ResponseResult {
   result: 0 | 1
