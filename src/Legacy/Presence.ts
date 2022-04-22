@@ -13,9 +13,9 @@ export default {
             'user-agent': UserAgent,
             'content-type': ContentType.Json
           },
-          form: {
+          body: JSON.stringify({
             data: `${data};${npm}`
-          }
+          })
         })
         .json()
       return {

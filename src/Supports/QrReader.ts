@@ -52,7 +52,7 @@ export const scanWithApi = async (data: Buffer): Promise<string> => {
   let next = true
   setTimeout(() => {
     next = false
-  }, 20_000)
+  }, 5_000)
   let html = ''
   while (next) {
     let ready = await getReady(responseRecognize.recognizeResultToken)
@@ -63,7 +63,7 @@ export const scanWithApi = async (data: Buffer): Promise<string> => {
   }
   const $ = Cheerio.load(html)
   const result = $('textarea').val()
-  if (!result) throw new Error(QrCodeInvalid)
+  if (!result || result == '') throw new Error(QrCodeInvalid)
   return result
 }
 
@@ -87,7 +87,7 @@ const scanWithImgonline = async (data: Buffer) => {
     .text()
   const $ = Cheerio.load(response)
   const result = $('#content div').text().trim()
-  if (!result) throw new Error(QrCodeInvalid)
+  if (!result || result == '') throw new Error(QrCodeInvalid)
   return result
 }
 
