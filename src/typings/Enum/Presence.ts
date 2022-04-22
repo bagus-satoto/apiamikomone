@@ -1,6 +1,6 @@
 export enum PresenceMessage {
-  Success = 'Anda sudah melakukan presensi!',
-  ResourceAlreadyExists = 'Presensi berhasil!',
+  Success = 'Presensi berhasil!',
+  ResourceAlreadyExists = 'Anda sudah melakukan presensi!',
   Failed = 'Presensi gagal.'
 }
 
@@ -8,5 +8,4 @@ export enum PresenceStatus {
   Success = 'success',
   ResourceAlreadyExists = 'resourceAlreadyExists',
   Failed = 'failed'
-
 }
