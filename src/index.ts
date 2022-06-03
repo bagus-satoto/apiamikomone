@@ -5,5 +5,4 @@ import MikomValidation from './Supports/Validations'
 import MikomReader from './Supports/QrReader'
 import MikomMaster from './Master'
 
-export { MikomLegacy, MikomSupports, MikomValidation, MikomReader, MikomMaster }
-export default MikomOneDevice
+export { MikomLegacy, MikomSupports, MikomValidation, MikomReader, MikomMaster,MikomOneDevice }
