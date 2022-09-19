@@ -1,4 +1,4 @@
-import OneDevice from '../src'
+import { MikomOneDevice as OneDevice } from '../src'
 import dotenv from 'dotenv'
 
 dotenv.config()

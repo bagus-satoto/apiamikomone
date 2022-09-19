@@ -1,10 +1,10 @@
 {
   "name": "@binsarjr/apiamikomone",
-  "version": "1.2.6",
+  "version": "1.2.8",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
-    "./lib/*"
+    "lib"
   ],
   "license": "MIT",
   "dependencies": {
@@ -38,7 +38,7 @@
   },
   "description": "Unofficial API AmikomOne and another Resource",
   "homepage": "https://github.com/binsarjr/apiamikomone",
-  "repository": "git@github.com:binsarjr/apiamikomone.git",
+  "repository": "https://github.com/binsarjr/apiamikomone",
   "author": "Binsar Dwi Jasuma <binsarjr121@gmail.com>",
   "private": false
 }
