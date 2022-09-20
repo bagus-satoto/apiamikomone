@@ -1,4 +1,4 @@
-import got from 'got/dist/source'
+import request from '../Supports/request'
 import Tokenizer from '../Supports/Tokenizer'
 import { IHistory, ITicketCost, ResponsePage } from '../typings/Response'
 
@@ -7,10 +7,9 @@ export default {
     bearerToken: string,
     xApiKey: string
   ): Promise<ITicketCost[]> => {
-    const response: ResponsePage<ITicketCost[]> = await got
+    const response: ResponsePage<ITicketCost[]> = await request
       .get(
-        `https://ds.amikom.ac.id/api/amikomone/payment/${
-          Tokenizer(bearerToken).npm
+        `https://ds.amikom.ac.id/api/amikomone/payment/${Tokenizer(bearerToken).npm
         }/biaya_tiket`,
         {
           headers: {
@@ -24,10 +23,9 @@ export default {
   },
 
   TicketHistory: (bearerToken: string, xApiKey: string) =>
-    got
+    request
       .get(
-        `https://ds.amikom.ac.id/api/amikomone/payment/${
-          Tokenizer(bearerToken).npm
+        `https://ds.amikom.ac.id/api/amikomone/payment/${Tokenizer(bearerToken).npm
         }/histori_tiket`,
         {
           headers: {
@@ -44,10 +42,9 @@ export default {
     bearerToken: string,
     xApiKey: string
   ): Promise<IHistory[]> => {
-    const response: ResponsePage<IHistory[]> = await got
+    const response: ResponsePage<IHistory[]> = await request
       .get(
-        `https://ds.amikom.ac.id/api/amikomone/payment/${
-          Tokenizer(bearerToken).npm
+        `https://ds.amikom.ac.id/api/amikomone/payment/${Tokenizer(bearerToken).npm
         }/histori`,
         {
           headers: {
@@ -61,10 +58,9 @@ export default {
   },
 
   Bill: (bearerToken: string, xApiKey: string) =>
-    got
+    request
       .get(
-        `https://ds.amikom.ac.id/api/amikomone/payment/${
-          Tokenizer(bearerToken).npm
+        `https://ds.amikom.ac.id/api/amikomone/payment/${Tokenizer(bearerToken).npm
         }/tagihan`,
         {
           headers: {
@@ -76,7 +72,7 @@ export default {
       .json(),
 
   Payment: (bearerToken: string) =>
-    got
+    request
       .get('https://ds.amikom.ac.id/api/amikomone/payment', {
         headers: {
           Authorization: `Bearer ${bearerToken}`
@@ -87,7 +83,7 @@ export default {
    * Daftar bank AMIKOM
    */
   Bank: async (bearerToken: string): Promise<string[]> => {
-    const response: ResponsePage<string[]> = await got
+    const response: ResponsePage<string[]> = await request
       .get('https://ds.amikom.ac.id/api/amikomone/bank', {
         headers: {
           Authorization: `Bearer ${bearerToken}`

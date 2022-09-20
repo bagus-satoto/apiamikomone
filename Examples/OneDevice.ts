@@ -6,6 +6,8 @@ dotenv.config()
 const npm = process.env.NPM || ''
 const password = process.env.PASSWORD || ''
 const devceiId = process.env.DEVICEID || ''
+// amikom location latlong
+const AMIKOM_LATLONG = "-7.759898,110.408376"
 
 const qrcode =
   'av7pBw6QKk5bKFl6sXND7O1Z56R3HOzQcMJsBu81cE1Qp8oRFpZLfm0YK6bLp+LJ'
@@ -36,11 +38,12 @@ OneDevice.Auth(npm, password, devceiId).then(async (resp) => {
 
   const presenceByQrcode = await OneDevice.Presence.Qrcode(
     resp.access_token,
-    qrcode
+    qrcode,
+    AMIKOM_LATLONG
   )
   console.log(presenceByQrcode, 'presenceByQrcode')
 
-  const presenceByCode = await OneDevice.Presence.Code(resp.access_token, code)
+  const presenceByCode = await OneDevice.Presence.Code(resp.access_token, code,AMIKOM_LATLONG)
   console.log(presenceByCode, 'presenceByCode')
 
   const presenceRekap = await OneDevice.Presence.All(

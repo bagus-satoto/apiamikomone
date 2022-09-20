@@ -1,4 +1,4 @@
-import got from 'got/dist/source'
+import request from '../Supports/request'
 import Tokenizer from '../Supports/Tokenizer'
 import { IBio, IJadwalKuliah, IMataKuliah, InitKHS } from '../typings/Response'
 const JadwalKuliah = async (
@@ -6,7 +6,7 @@ const JadwalKuliah = async (
   xApiKey: string,
   idHari?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | number
 ): Promise<IJadwalKuliah[]> => {
-  const response: IJadwalKuliah[] = await got
+  const response: IJadwalKuliah[] = await request
     .post('https://ds.amikom.ac.id/api/amikomone/academic/personal/jaku', {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
@@ -53,7 +53,7 @@ const initKhs = async (
   bearerToken: string,
   xApiKey: string
 ): Promise<InitKHS> =>
-  got
+  request
     .post('https://ds.amikom.ac.id/api/amikomone/academic/krs/prep_khs', {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
@@ -62,7 +62,7 @@ const initKhs = async (
     })
     .json()
 const Bio = async (bearerToken: string, xApiKey: string): Promise<IBio> => {
-  const response: IBio = await got
+  const response: IBio = await request
     .post('https://ds.amikom.ac.id/api/amikomone/academic/personal/bio', {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
@@ -81,10 +81,9 @@ const Bio = async (bearerToken: string, xApiKey: string): Promise<IBio> => {
   return response
 }
 const KtmDigital = (bearerToken: string, xApiKey: string) =>
-  got
+  request
     .get(
-      `https://ds.amikom.ac.id/api/amikomone/mahasiswa/${
-        Tokenizer(bearerToken).npm
+      `https://ds.amikom.ac.id/api/amikomone/mahasiswa/${Tokenizer(bearerToken).npm
       }/ktm_digital`,
       {
         headers: {

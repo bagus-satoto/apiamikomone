@@ -1,4 +1,3 @@
-import got from 'got/dist/source'
 import { PresenceMessage, PresenceStatus } from '../typings/Enum/Presence'
 import moment from 'moment'
 import Tokenizer from '../Supports/Tokenizer'
@@ -9,6 +8,7 @@ import {
 } from '../typings/Response'
 import { ContentType } from '../typings/Headers'
 import Encryption from '../Supports/Encryption'
+import request from '../Supports/request'
 
 const makeRawSignature = function (nim: string, kode: string) {
   moment.locale('id')
@@ -44,10 +44,11 @@ export default {
    */
   Qrcode: async (
     bearerToken: string,
-    data: string
+    data: string,
+    location: string
   ): Promise<ResponsePresence> => {
     try {
-      await got
+      await request
         .post(
           'https://ds.amikom.ac.id/api/amikomone/presensi_mobile/validate_qr_code',
           {
@@ -56,7 +57,8 @@ export default {
               'content-type': ContentType.Json
             },
             json: {
-              data: `${data};${Tokenizer(bearerToken).npm}`
+              data: `${data};${Tokenizer(bearerToken).npm}`,
+              location
             }
           }
         )
@@ -84,10 +86,11 @@ export default {
    */
   Code: async (
     bearerToken: string,
-    code: string
+    code: string,
+    location: string
   ): Promise<ResponsePresence> => {
     try {
-      await got
+      await request
         .post(
           'https://ds.amikom.ac.id/api/amikomone/presensi_mobile/validate_ticket',
           {
@@ -98,7 +101,8 @@ export default {
             json: {
               data: Encryption.encrypt(
                 makeRawSignature(Tokenizer(bearerToken).npm || '', code)
-              )
+              ),
+              location
             }
           }
         )
@@ -130,7 +134,7 @@ export default {
     semester: number,
     tahunAkademik: string
   ): Promise<IPresence[]> =>
-    got
+    request
       .post('https://ds.amikom.ac.id/api/amikomone/academic/presensi/rekap', {
         headers: {
           Authorization: `Bearer ${bearerToken}`,
@@ -151,7 +155,7 @@ export default {
     xApiKey: string,
     krsId: number
   ): Promise<IPresenceDetail[]> =>
-    got
+    request
       .post('https://ds.amikom.ac.id/api/amikomone/academic/presensi/kuliah', {
         headers: {
           Authorization: `Bearer ${bearerToken}`,
