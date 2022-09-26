@@ -45,7 +45,7 @@ export default {
   Qrcode: async (
     bearerToken: string,
     data: string,
-    location: string
+    location: string = "Amikom"
   ): Promise<ResponsePresence> => {
     try {
       await request
@@ -72,13 +72,13 @@ export default {
       if (!statusCode.toString().startsWith('4')) throw new Error(e)
       return statusCode == 422
         ? {
-            status: PresenceStatus.ResourceAlreadyExists,
-            message: PresenceMessage.ResourceAlreadyExists
-          }
+          status: PresenceStatus.ResourceAlreadyExists,
+          message: PresenceMessage.ResourceAlreadyExists
+        }
         : {
-            status: PresenceStatus.Failed,
-            message: PresenceMessage.Failed
-          }
+          status: PresenceStatus.Failed,
+          message: PresenceMessage.Failed
+        }
     }
   },
   /**
@@ -87,7 +87,7 @@ export default {
   Code: async (
     bearerToken: string,
     code: string,
-    location: string
+    location: string = "Amikom"
   ): Promise<ResponsePresence> => {
     try {
       await request
@@ -116,13 +116,13 @@ export default {
       if (!statusCode.toString().startsWith('4')) throw new Error(e)
       return statusCode == 422
         ? {
-            status: PresenceStatus.ResourceAlreadyExists,
-            message: PresenceMessage.ResourceAlreadyExists
-          }
+          status: PresenceStatus.ResourceAlreadyExists,
+          message: PresenceMessage.ResourceAlreadyExists
+        }
         : {
-            status: PresenceStatus.Failed,
-            message: PresenceMessage.Failed
-          }
+          status: PresenceStatus.Failed,
+          message: PresenceMessage.Failed
+        }
     }
   },
   /**

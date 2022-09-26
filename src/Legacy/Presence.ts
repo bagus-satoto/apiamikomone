@@ -5,7 +5,7 @@ import { ContentType, UserAgent } from '../typings/Headers'
 import { IPresence, ResponsePresence } from '../typings/Response'
 
 export default {
-  QrCode: async (npm: string, data: string): Promise<ResponsePresence> => {
+  QrCode: async (npm: string, data: string, location = "Amikom"): Promise<ResponsePresence> => {
     try {
       await got
         .post('http://202.91.9.14:6000/api/presensi_mobile/validate_qr_code', {
@@ -14,7 +14,8 @@ export default {
             'content-type': ContentType.Json
           },
           body: JSON.stringify({
-            data: `${data};${npm}`
+            data: `${data};${npm}`,
+            location
           })
         })
         .json()
@@ -27,13 +28,13 @@ export default {
       if (!statusCode.toString().startsWith('4')) throw new Error(e)
       return statusCode == 422
         ? {
-            status: PresenceStatus.ResourceAlreadyExists,
-            message: PresenceMessage.ResourceAlreadyExists
-          }
+          status: PresenceStatus.ResourceAlreadyExists,
+          message: PresenceMessage.ResourceAlreadyExists
+        }
         : {
-            status: PresenceStatus.Failed,
-            message: PresenceMessage.Failed
-          }
+          status: PresenceStatus.Failed,
+          message: PresenceMessage.Failed
+        }
     }
   },
   All: (
