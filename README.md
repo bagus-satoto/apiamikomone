@@ -3,7 +3,7 @@
 # Instalasi
 
 ```bash
-yarn add github:binsarjr/apiamikomone
+yarn add github:bagus-satoto/apiamikomone
 ```
 
 Apabila ingin install dengan commit,branch ataupun tag yg berbeda stylenya seperti ini
